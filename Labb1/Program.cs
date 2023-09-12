@@ -1,90 +1,84 @@
-﻿/* 
-    Be användaren om en sträng
-
-    Deklarera en variabel som sparar inputen (inputText) , typ string
-    Deklarera en variabel som sparar siffrorna (Number), typ string
-    Deklarera en lista, typ list, som håller (Number)´s
-    Deklarera en variabel, typ int (SumOfNumbers), som skriver ut summan
-
-    Loppa igenom hela texten
-        Om tecken är en siffra 
-            lägga till den i en variabel
-        annars 
-            loppen ska breaka 
-            lägga till (Number) -> (ListOfNumbers)
-    
-    Skriva ut hela strängen
-        För varje delsträng hittad 
-            markera delsträngarna på varsin rad
-
-    För varje tal i (ListOfNumbers)
-            Konvertera (ListOfNumber) till int
-            Addera alla talen i (ListOfNumbers)
-        Skriv ut (SumOfNumbers)
-
-*/
-
-// Be användaren om en sträng
+﻿// Be användaren om en sträng
 Console.Write("Write a string: ");
 
-// Deklarera en variabel som sparar inputen (inputString) , typ string
+// Deklarera en variabel av typ string som sparar inputen
 string inputString = Console.ReadLine();
 
-// Deklarera en lista, typ list, som håller (Number)´s
+// Deklarera en lista, som håller de nummersträngar som har hittas
 List<string> ListOfNumbers = new();
 
-// Deklarera en variabel, typ int (SumOfNumbers), som skriver ut summan
+// Deklarera en variabel, typ long, som håller den totala siffran 
 long SumOfNumbers  = 0;
 
-// Loppa igenom hela texten
+// Loppa igenom varje tecken i (inputString)
 for (int i = 0; i < inputString.Length; i++)
 {   
+    // Deklarera en variabel som håller det nuvarande nummersträngen, ska nollställas varje gång (i) ökar med 1
+    string currentNumber = string.Empty;
     // Deklarera en variabel som håller koll på antalet tecken i currentNumber
     int counter = 0;
-    string currentNumber = string.Empty;
-    // om vi skulle börja på bokstav gå till nästa element i arrayen
+    
+    // Om (i) skulle börja på bokstav gå till nästa tecken i (inputString)
     if (Char.IsLetter(inputString[i])) continue;
+    // Annars lägg till siffran i (currentNumber)
     currentNumber += inputString[i];
+    // Öka (counter) med 1
     counter++;
-    //kolla nästkommande element efter i tills bokstav eller matchande siffra
+
+    //Kolla nästkommande tecken efter (i) tills bokstav hittas eller att (i) == (j)
     for (int j = i + 1; j < inputString.Length; j++)
     {
-        // om nästa tecken är en bokstav så är det slut och vi kan låta i gå till nästa tecken
+        // Om nästa tecken är en bokstav 
         if (Char.IsLetter(inputString[j]))
         {
-            // avsluta j loop
+            // Avbryt nuvarande (j) loop
             break;
         }
+
+        // Annara lägg till tecknet i (currentNumber)
         currentNumber += inputString[j];
+        // Öka (counter) med 1
         counter++;
 
         // Om counter är mer eller lika med 3
         if (counter >= 3) { 
-        //Om nästa tecken vara samma så lägg till i arrayen och låt i gå vidare
+            // Om värdet på plats (i) är samma som värdet på plats (j)
             if (inputString[i] == inputString[j])
             {
+                // Lägg till (currentNumber) i (ListOfNumbers)
                 ListOfNumbers.Add(currentNumber);
 
+                // Deklarera en variabel som innehåller en subträng från inputString[0] till inputString[i]
                 var beforeMatch = inputString.Substring(0, i);
+                // Deklarera en variabel som innehåller en subträng från inputString[j + 1] till sista tecknet i (inputString)
                 var afterMatch = inputString.Substring(j + 1, inputString.Length - j - 1);
 
-                // Skriv ut string med highlighted nummer
+                // Skriv ut (beforeMatch)
                 Console.Write(beforeMatch);
+                // Ändra färgen
                 Console.ForegroundColor = ConsoleColor.Cyan;
+                // Skriv ut (currentNumber)
                 Console.Write(currentNumber);
+                // Återställ färget till default
                 Console.ResetColor();
+                // Skriv ut (afterMatch)
                 Console.Write(afterMatch);
+                // Skapa en ny rad för nästkommande utskrift
                 Console.WriteLine();
 
+                // Avbryt nuvarande (i) loop
                 break;
             }
         }
     }
 }
 
+// För varje item i (ListOfNumbers)
 for (int i = 0; i < ListOfNumbers.Count; i++) 
 {
+    // Deklarera en variabel, typ long, som håller det konverterade nummersträngen, nollställs varje gång (i) ökar med 1
     long num = 0;
+    // Om det går att konvertera nummersträngarna, spara värdet i (num)
     bool isParsable = Int64.TryParse(ListOfNumbers[i], out num);
     // Addera num till SumOfNumbers
     SumOfNumbers += num;
