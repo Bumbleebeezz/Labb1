@@ -17,27 +17,39 @@ for (int i = 0; i < inputString.Length; i++)
     string currentNumber = string.Empty;
     // Deklarera en variabel som håller koll på antalet tecken i (currentNumber) 
     int counter = 0;
-    
-    // Om (i) skulle börja på bokstav gå till nästa tecken i (inputString)
-    if (Char.IsLetter(inputString[i])) continue;
-    // Annars lägg till inputString[i] i (currentNumber)
-    currentNumber += inputString[i];
-    // Öka (counter) med 1
-    counter++;
+
+    // Om (i) skulle börja på en siffra 
+    if (Char.IsDigit(inputString[i])) 
+    { 
+        // Lägg till inputString[i] i (currentNumber)
+        currentNumber += inputString[i];
+        // Öka (counter) med 1
+        counter++;
+    }
+    // Annars
+    else 
+    { 
+        // Öka (i) med 1 och fortsätt
+        continue;
+    }
 
     //Kolla nästkommande tecken efter (i) tills bokstav hittas eller att inputString[i] är lika med inputString[j]
     for (int j = i + 1; j < inputString.Length; j++)
     {
-        // Om nästa tecken är en bokstav 
-        if (Char.IsLetter(inputString[j]))
+        // Om (j) är en siffra 
+        if (Char.IsDigit(inputString[j]))
         {
+            // Lägg till tecknet i (currentNumber)
+            currentNumber += inputString[j];
+            // Öka (counter) med 1
+            counter++;
+        }
+        // Annars 
+        else 
+        { 
             // Avbryt nuvarande (j) loop
             break;
         }
-        // Annara lägg till tecknet i (currentNumber)
-        currentNumber += inputString[j];
-        // Öka (counter) med 1
-        counter++;
 
         // Om counter är mer eller lika med 3
         if (counter >= 3) { 
