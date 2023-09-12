@@ -27,8 +27,8 @@
 // Be användaren om en sträng
 Console.Write("Write a string: ");
 
-// Deklarera en variabel som sparar inputen (inputText) , typ string
-string inputText = Console.ReadLine();
+// Deklarera en variabel som sparar inputen (inputString) , typ string
+string inputString = Console.ReadLine();
 
 // Deklarera en lista, typ list, som håller (Number)´s
 List<string> ListOfNumbers = new();
@@ -37,41 +37,47 @@ List<string> ListOfNumbers = new();
 long SumOfNumbers  = 0;
 
 // Loppa igenom hela texten
-for (int i = 0; i < inputText.Length; i++)
-{
-    string currentNumbers = string.Empty;
+for (int i = 0; i < inputString.Length; i++)
+{   
+    // Deklarera en variabel som håller koll på antalet tecken i currentNumber
+    int counter = 0;
+    string currentNumber = string.Empty;
     // om vi skulle börja på bokstav gå till nästa element i arrayen
-    if (Char.IsLetter(inputText[i])) continue;
-    currentNumbers += inputText[i];
-    //kollar alla näst kommande element efter i
-    for (int j = i + 1; j < inputText.Length; j++)
+    if (Char.IsLetter(inputString[i])) continue;
+    currentNumber += inputString[i];
+    counter++;
+    //kolla nästkommande element efter i tills bokstav eller matchande siffra
+    for (int j = i + 1; j < inputString.Length; j++)
     {
         // om nästa tecken är en bokstav så är det slut och vi kan låta i gå till nästa tecken
-        if (Char.IsLetter(inputText[j]))
+        if (Char.IsLetter(inputString[j]))
         {
             // avsluta j loop
             break;
         }
+        currentNumber += inputString[j];
+        counter++;
 
-        currentNumbers += inputText[j];
-
+        // Om counter är mer eller lika med 3
+        if (counter >= 3) { 
         //Om nästa tecken vara samma så lägg till i arrayen och låt i gå vidare
-        if (inputText[i] == inputText[j])
-        {
-            ListOfNumbers.Add(currentNumbers);
+            if (inputString[i] == inputString[j])
+            {
+                ListOfNumbers.Add(currentNumber);
 
-            var beforeMatch = inputText.Substring(0, i);
-            var afterMatch = inputText.Substring(j + 1, inputText.Length - j - 1);
+                var beforeMatch = inputString.Substring(0, i);
+                var afterMatch = inputString.Substring(j + 1, inputString.Length - j - 1);
 
-            // Skriv ut string med highlighted nummer
-            Console.Write(beforeMatch);
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(currentNumbers);
-            Console.ResetColor();
-            Console.Write(afterMatch);
-            Console.WriteLine();
+                // Skriv ut string med highlighted nummer
+                Console.Write(beforeMatch);
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write(currentNumber);
+                Console.ResetColor();
+                Console.Write(afterMatch);
+                Console.WriteLine();
 
-            break;
+                break;
+            }
         }
     }
 }
